@@ -93,6 +93,10 @@ void imprimeletradada(lista_letra *lista){
 
 }
 
+void ORDENA(lista_letra *lista, ListaPala *LP){
+
+}
+
 //trasporta informacao(Do mein para pra o tad lista de palavras/palvra)
 void trasport(lista_letra *lista,char *palavra,int escolha){
     int cont = 0;

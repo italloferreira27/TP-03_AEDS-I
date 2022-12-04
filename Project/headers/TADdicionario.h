@@ -36,6 +36,8 @@ void imprimeletra(lista_letra *lista);
 //imprime letra dada
 void imprimeletradada(lista_letra *lista);
 
+void ORDENA(lista_letra *lista, ListaPala *LP);
+
 //trasporta informacao
 void trasport(lista_letra *lista,char *palavra,int escolha);
 
