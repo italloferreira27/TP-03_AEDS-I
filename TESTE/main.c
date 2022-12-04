@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+//#include "funcoes.h"
 
 int main(){
     FILE *file;
@@ -9,7 +10,8 @@ int main(){
 
     char linha[100], *palavra; 
     char vet[50][100], aux[20];
-    int cont, comp, mov; 
+    int cont, comp, mov, opcao; 
+    int i, j, min;
     double time;
     clock_t start, end;
 
@@ -32,18 +34,42 @@ int main(){
     }
 
     start = clock();
-    //..........Ordenar..........
-    for(int a = 0; a < 40; a++){
-        for(int j = a+1; j < 40; j++){
-            comp++;
-            if(strcmp(vet[a], vet[j]) > 0){
-                strcpy(aux, vet[a]);
-                strcpy(vet[a], vet[j]);
-                strcpy(vet[j], aux);
-                mov += 2;
-            }
-        }
+    //..........Ordenação..........
+    /*printf("1 = Bobble_sort;\n2 = Select_sort");
+    scanf("%d", &opcao);
+    switch(opcao){
+        case 1:
+            Bobble_sort(&vet[0][0], 40, &mov, &comp);
+            break;
+        case 2:
+            break;
+        default:
+         printf("\nOpcao Invalida!");
     }
+    */
+//    for(int a = 0; a < 40; a++){//Bobble_sort
+//         for(int j = a+1; j < 40; j++){
+//             comp++;
+//             if(strcmp(vet[a], vet[j]) > 0){ //0 se forem iguais, <0 se st1<st2 e >0 se st1>st2.
+//                 strcpy(aux, vet[a]);
+//                 strcpy(vet[a], vet[j]);
+//                 strcpy(vet[j], aux);
+//                 mov += 2;
+//             }
+//         }
+//     }
+
+        for(i = 0; i < 40; i++){ //select_sort
+            min = i;
+            for(j = i + 1; j < 40; j++){
+                comp++;
+                if(strcmp(vet[j], vet[min]) < 0) min = j;//0 se forem iguais, <0 se st1<st2 e >0 se st1>st2.
+            }
+            strcpy(aux, vet[min]);
+            strcpy(vet[min], vet[i]);
+            strcpy(vet[i], aux);
+            mov += 2;
+        }
     //...........................
     end = clock();
 
