@@ -73,18 +73,68 @@ int main(){
 
 
 
-    for(i = 0; i <= tam; i++){
-        strcpy(aux, vet[i]);
-        j = i-1;
-        while(j >= 0 && strcmp(vet[j], aux) > 0){
-            strcpy(vet[j+1], vet[j]);
-            j--;
-            comp++;
-        }
-        strcpy(vet[j+1], aux);
-        mov++;
-    }
+    // for(i = 0; i <= tam; i++){//Insertion_sort
+    //     strcpy(aux, vet[i]);
+    //     j = i-1;
+    //     while(j >= 0 && strcmp(vet[j], aux) > 0){
+    //         strcpy(vet[j+1], vet[j]);
+    //         j--;
+    //         comp++;
+    //     }
+    //     strcpy(vet[j+1], aux);
+    //     mov++;
+    // }
 
+    //int h;
+    //h = tam / 2;
+    // h = 1;
+    // while(h < tam/3){ //Shell_sort
+    //     h = 3 * h + 1;
+    // }
+
+    // while(h > 0){
+    //     for(i = h; i < tam; i++){
+    //         strcpy(aux, vet[i]); mov++;
+    //         j = i - h;
+    //         while(j >= 0 && strcmp(vet[j], aux) > 0){//0 se forem iguais, <0 se st1<st2 e >0 se st1>st2.
+    //             comp++;
+    //             strcpy(vet[j+h], vet[j]);
+
+    //             j -= h;
+    //         }
+    //         strcpy(vet[j + h], aux); mov++;
+    //     }//h /= 2;
+
+    //     h = (h-1)/3;
+    // }
+
+  int Particiona(int* vet, int inicio, int final){
+      int esq, dir, aux;
+      char pivo[20];
+      esq = inicio;
+      dir = final;
+      strcpy(pivo, vet[inicio]);
+      while(esq < dir){
+          while(strcmp(vet[esq], pivo) <= 0) esq++; //0 se forem iguais, <0 se st1<st2 e >0 se st1>st2.
+          while(strcmp(vet[dir], pivo)) > 0 dir--; //0 se forem iguais, <0 se st1<st2 e >0 se st1>st2.
+          if(esq < dir){
+              strcpy(aux, vet[esq]);
+              strcpy(vet[esq], vet[dir]);
+              strcpy(vet[dir], aux);
+          }
+      }
+      strcpy(vet[inicio], vet[dir]);
+      strcpy(vet[dir], pivo);
+      return dir;
+  }
+
+  void Quick_sort(int* vet, int inicio, int fim){
+      char pivo[20];
+      if(fim > inicio){
+          pivo = Particiona(vet, inicio, fim);
+          Quick_sort(vet, inicio, pivo-1);
+          Quick_sort(vet, pivo+1, fim);
+      }
     //...........................
     end = clock();
 
