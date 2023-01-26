@@ -2,6 +2,7 @@
 #define TADDICIONARIO_H
 
 #include "TADpalavra.h"
+#include "media.h"
 
 //letra
 typedef struct {
@@ -36,10 +37,21 @@ void imprimeletra(lista_letra *lista);
 //imprime letra dada
 void imprimeletradada(lista_letra *lista);
 
-void ORDENA(lista_letra *lista, ListaPala *LP);
-
 //trasporta informacao
 void trasport(lista_letra *lista,char *palavra,int escolha);
 
+//costroi vetor
+void Constroi_vetor(lista_letra *ll,ListaPala *lp);
+
+//criando uma copia para ordernacao
+void copiaparaodernar(ListaPala *let,TPalavra *vet);
+
+//ordena toda lista
+void ordena_lista(lista_letra *lista,char *palavra,int escolha, media *v_media);
+
+//trasporta informacao para as funcoes de ordenacao
+void trasportsort(lista_letra *lista,celula_letra *letra, char *palavra,int escolha, media *v_media);
+
+void Arquivos(void);
 
 #endif

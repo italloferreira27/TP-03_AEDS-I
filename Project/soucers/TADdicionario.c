@@ -1,8 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "../headers/TADdicionario.h"
 #include "../headers/TADpalavra.h"
+#include "../headers/sort.h"
+
+
 
 //inicializa lista de letras
 void inicia_lista_letra(lista_letra *lista){
@@ -93,13 +97,47 @@ void imprimeletradada(lista_letra *lista){
 
 }
 
-void ORDENA(lista_letra *lista, ListaPala *LP){
+//cria vertores
+void Constroi_vetor(lista_letra *ll,ListaPala *lp){
+    celula_letra *auxL;
+    celulapalavra *auxP;
+    auxL = ll->primeiro->prox;
+    
+    while(auxL != NULL){
+        auxL->Letra.Pala->Vpalavra = (TPalavra*)malloc(auxL->Letra.Pala->nroElem*sizeof(TPalavra));
+        auxL->Letra.Pala->in = 0;
+        auxP = auxL->Letra.Pala->Primeiro->prox;
+
+        while(auxP != NULL){
+            auxL->Letra.Pala->Vpalavra[auxL->Letra.Pala->in] = auxP->palavra;
+            auxL->Letra.Pala->in ++;
+            auxP = auxP->prox;
+
+        }   
+        auxL = auxL->prox;
+
+    }
+}
+
+// copia para ordenar
+void copiaparaodernar(ListaPala *let, TPalavra *vet){
+    int tam,i;
+    ListaPala *aux;
+    celulapalavra *auxpala;
+    
+    aux = let;
+    tam = aux->nroElem;
+    
+    for(i=0;i<tam;i++){
+        vet[i] = let->Vpalavra[i];
+    }
 
 }
 
+
 //trasporta informacao(Do mein para pra o tad lista de palavras/palvra)
 void trasport(lista_letra *lista,char *palavra,int escolha){
-    int cont = 0;
+    int cont = 0,i;
     celula_letra *aux = lista->primeiro->prox;
 
     while(aux->Letra.letra != palavra[0] && aux->prox != NULL){
@@ -113,8 +151,6 @@ void trasport(lista_letra *lista,char *palavra,int escolha){
     if(aux->prox != NULL || cont != 0){
         switch(escolha){
             case 2:
-
-                int i;
                 i = ProcurarLP(aux->Letra.Pala,palavra);
                 if(i==1)printf("\nPalavra Encontrada!\n\n");
                 else printf("\nInfelimente a palavra nao existe!\n\n");
@@ -139,10 +175,100 @@ void trasport(lista_letra *lista,char *palavra,int escolha){
 
                 ImprimirLPespecifica(aux->Letra.Pala,palavra);
                 break;
-
+            
         }
     }else{
         printf("\nItem nao encontrado.\n");
     }
 
+}
+
+//ordena toda lista
+void ordena_lista(lista_letra *lista,char *palavra,int escolha, media *v_media){
+    clock_t start, end;
+    double time;
+    celula_letra *aux = lista->primeiro->prox;
+
+    start = clock();
+
+    v_media->cont = 0;
+    v_media->media_c = 0;
+    v_media->media_m = 0;
+
+    while(aux){
+        trasportsort(lista,aux,palavra,escolha,v_media);
+        aux = aux->prox;
+    }
+    end = clock();
+
+    printf("\nTotal de comparacoes: %d\nTotal de movimentacoes: %d\nNumero total de letra: %d\n", v_media->media_c, v_media->media_m, v_media->cont);
+
+    time = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("\n--------------------------------------------\n");
+    printf("Tempo de execucao total: %f seg\n",time);
+    printf("--------------------------------------------\n");
+    printf("Media do tempo de execucao: %.2f seg\n",time/v_media->cont);
+    printf("--------------------------------------------\n");
+    printf("Media de comparacoes: %.2f\n",v_media->media_c/v_media->cont);
+    printf("--------------------------------------------\n");
+    printf("Media de movimentacoes: %.2f\n",v_media->media_m/v_media->cont);
+    printf("--------------------------------------------\n");
+
+    
+}
+
+
+//trasporta informacao para as funcoes de ordenacao
+void trasportsort(lista_letra *lista, celula_letra *letra, char *palavra, int escolha, media *v_media){
+    int cont = 0;
+    celula_letra *aux ;
+
+    if(palavra[0] != '0'){
+        aux = lista->primeiro->prox;
+        while(aux->Letra.letra != palavra[0] && aux->prox != NULL){
+            aux = aux->prox;
+        }
+
+        if(aux->Letra.letra == palavra[0]){
+            cont++;
+        } 
+    }
+    else{
+        aux = letra;
+        cont = 1;  //nessesario para entrar no switch
+    }
+    
+    if(aux->prox != NULL || cont != 0){
+        switch(escolha){
+            case 1:
+                bubblesort(aux->Letra.Pala, v_media);
+                break;
+            
+            case 2:
+                insertionsort(aux->Letra.Pala, v_media);
+                break;
+
+            case 3:
+                selectionsort(aux->Letra.Pala, v_media);
+                break;
+
+            case 4:
+                Heapsort(aux->Letra.Pala, v_media);
+                break;
+            
+            case 5:
+                shellsort(aux->Letra.Pala, v_media);
+                break;
+            
+            case 6:
+                quicksort(aux->Letra.Pala, v_media);
+                break;
+        }
+    }else{
+        printf("\nItem nao encontrado.\n");
+    }
+}
+
+void Arquivos(){ //Nomes dos arquivos
+    printf("Arquivos:\n\tteste_01.txt\tteste_02.txt\tteste_03.txt\n\n");
 }

@@ -31,8 +31,11 @@ typedef struct celulapalavra{
 typedef struct{
     Apontador Primeiro;
     Apontador Ulitmo;
-    //Apontado linhaL;
     int nroElem; //numero de elementos
+
+     //vetor de palavras
+    TPalavra *Vpalavra;
+    int in;
 }ListaPala; //Lista palavra
 
 //Prototipos

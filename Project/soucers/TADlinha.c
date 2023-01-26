@@ -21,9 +21,11 @@ void LL_Inserir(Tlista* lista, Titem item,int cont){
         lista->Ultimo->prox = (Apontado) malloc(sizeof(Celula_Linha));
         lista->Ultimo = lista->Ultimo->prox;
         lista->Ultimo->linha = item;
-        lista->Ultimo->prox = NULL;    
+        lista->Ultimo->prox = NULL;
+        
     }
     
+
 }
 
 //imprime lista de linhas

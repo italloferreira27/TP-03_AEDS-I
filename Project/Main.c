@@ -1,53 +1,70 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../Project/headers/TADdicionario.h"
-#include "../Project/headers/TADpalavra.h"
-#include "../Project/headers/TADlinha.h"
+#include "headers/TADdicionario.h"
+#include "headers/TADpalavra.h"
+#include "headers/TADlinha.h"
 
 int main(){
     lista_letra letras;
     letra let;
     ListaPala lista;
     TPalavra obj;
-
+    media i_media;
     Tlista linha;
     Titem item;
 
-    int escolha, result;
+    int escolha = 0, escolha2, result;
     int cont = 1, i;
     
     char linha_texto[100],pala[10];
     char *palavra;
-    char l;
+    char l, nome_arq[100], nome[20];
 
     celula_letra *auxptr;
     celula_letra *aux1;
 
     FILE *TXTptr;
-    TXTptr = fopen("texto.txt", "r");
 
 
-    inicia_lista_letra(&letras);
+    while(escolha != 10){
 
-
-    while(escolha != 9){
-
-        InstrucoesLP(); //exibe menu de escolhas
+        if(escolha == 0)InstrucoesLP(); //exibe menu de escolhas
+        if(escolha != 0){
+            printf("\n-------------------------------------\n");
+            printf("Digite 0 caso queira ver o menu\n");
+            printf("-------------------------------------\n");
+        }
+        
         printf("Escolha uma opcao: ");
         scanf("%d",&escolha);
         printf("\n");
 
         switch(escolha){
+            case 0:
+                break;
             case 1:
-                printf("Lendo arquivo de texto.\n\n");
+                free(letras.primeiro);
+                inicia_lista_letra(&letras);
+                strcpy(nome_arq, "./Arquivos-teste/");
+                Arquivos();
+
+                printf("Digite o nome do arquivo: ");
+                scanf("%s", nome); //Lendo nome do arquivo
+                strcat(nome_arq, nome);
+
+                FILE *TXTptr;
+                TXTptr = fopen(nome_arq, "r");
+
+                printf("\nLendo arquivo de texto.\n\n");
                 printf("...\n\n");
                 if(TXTptr == NULL){
-                    printf("Arquivo nao pode ser aberto.\n");
+                    printf("Arquivo nao pode ser aberto.\n"); 
                     exit (0);
                 }
                 else{
                    while(fgets(linha_texto, 100, TXTptr) != NULL){
+                        i_media.cont++;
                         palavra = strtok(linha_texto, " "); //Esta separando cada palavra da linha
 
                         while(palavra){
@@ -66,7 +83,6 @@ int main(){
                                 }
                                 palavra = palavraaux;
                             }
-                            //
 
                             verifica_letra(&letras, let, palavra,cont);
                             palavra = strtok(NULL, " "); //Passa para a proxima palavra
@@ -76,7 +92,8 @@ int main(){
                     }
                 }
                 fclose(TXTptr);
-                printf("Leitura realizada com sucesso.\n\n");
+                Constroi_vetor(&letras,&lista);
+                printf("Leitura realizada com sucesso.\n");
                 break;
             case 2:
                     printf("Digite a palavra para verificar: ");
@@ -145,18 +162,67 @@ int main(){
                     printf("\nLista vazia.\n");
                 }
                 break;
-
+            
             case 9:
+                if(TXTptr == NULL){
+                    printf("Infelizmente o arquivo não foi lido, .\n"); 
+                    break;
+                }
 
-                printf("Finalizando ...\n");
+                printf("-----------------------------------------------\n"
+                       "Digite '0' para ordenar toda a lista\n"
+                       "                OU"
+                       "\nDigite a letra da lista que deseja ordenar\n"
+                       "-----------------------------------------------\n");
+                scanf("%s",pala);
+                
+                printf(
+              "\n-----------------------------------\n"
+                "Menu de ordenacao:\n"
+                "1 - Bubble_sort       4 - Heap_sort\n"
+                "2 - Insertion_sort    5 - Shell_sort\n"
+                "3 - Selection_sort    6 - Quick_sort\n"
+                "-----------------------------------\n"
+                "Digite um numero: ");
+                scanf("%d",&escolha2);
+                if(pala[0] == '0'){
+                    ordena_lista(&letras,pala,escolha2, &i_media);
+                }else{
+                    switch(escolha2){
+                        case 1:
+                            trasportsort(&letras,letras.utimo,pala,escolha2, &i_media);
+                            break;
+                        
+                        case 2:
+                            trasportsort(&letras,letras.utimo,pala,escolha2, &i_media);
+                            break;
 
-                break;
+                        case 3:
+                            trasportsort(&letras,letras.utimo,pala,escolha2, &i_media);
+                            break;
+                        
+                        case 4:
+                            trasportsort(&letras,letras.utimo,pala,escolha2, &i_media);
+                            break;
+                        
+                        case 5:
+                            trasportsort(&letras,letras.utimo,pala,escolha2, &i_media);
+                            break;
+                        case 6:
+                            trasportsort(&letras,letras.utimo,pala,escolha2, &i_media);
+                            break;
+                    }
+                    break;
+                case 10:
+                    printf("Finalizando ...\n");
 
-            default:
+                    break;
+                default:
 
-                printf("Escolha invalida.\n\n");
+                    printf("Escolha invalida.\n\n");
 
-                break;
+                    break;
+            }
         }
 
     }

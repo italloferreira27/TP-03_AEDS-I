@@ -4,6 +4,7 @@
 #include "../headers/TADdicionario.h"
 #include "../headers/TADpalavra.h"
 #include "../headers/TADlinha.h"
+//#include "../headers/sort.h"
 
 //verificar se a lista esta vazia
 int ListaVaziaLP(ListaPala *LP){
@@ -194,14 +195,16 @@ void TamanhoLP(ListaPala *LP){ //funcao 8
 
 
 void InstrucoesLP(void){
-    printf("\nMENU:\n"
-    "1 = Ler o arquivo de texto;\n"
-    "2 = Procurar se a palavra existe;\n"
-    "3 = Excluir um elemento especifico da lista;\n"
-    "4 = Excluir um elemento no final da lista;\n"
-    "5 = Exibir quantas palavras existem;\n"
-    "6 = Imprimir a lista de palavras;\n"
-    "7 = Imprimir palavra desejada e suas linhas;\n"
-    "8 = Imprimir letra especifica;\n"
-    "9 = Finalizar.\n");
+    printf(
+  "\n----------------------------------------------------------------------------------------------------\n"
+    "MENU:\n"
+    "1 = Ler o arquivo de texto;                           6 = Imprimir a lista de palavras;\n"
+    "2 = Procurar se a palavra existe;                     7 = Imprimir palavra desejada e suas linhas;\n"
+    "3 = Excluir um elemento especifico da lista;          8 = Imprimir letra especifica;\n"
+    "4 = Excluir um elemento no final da lista;            9 = Ordenar lista de letras;\n"
+    "5 = Exibir quantas palavras existem;                 10 = Finalizar.\n"
+    "----------------------------------------------------------------------------------------------------\n"
+    );
 }
+
+
